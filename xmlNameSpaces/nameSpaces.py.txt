@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import xml.etree.ElementTree as ET
+
+
+ns = {'se':'http://schemas.xmlsoap.org/soap/envelope/',
+      '2':'http://broadhop.com/unifiedapi/soap/types'}
+
+root = ET.parse("salida.xml").getroot()
+listStatus =['{http://broadhop.com/unifiedapi/soap/types}id','{http://broadhop.com/unifiedapi/soap/types}credential','{http://broadhop.com/unifiedapi/soap/types}version']
+
+print ("-----------")   
+for elem in root.findall('.//2:subscriber',ns): ##string to be found at any poistion
+    for line in list(elem):
+        if (line.tag not in listStatus):
+           print (line.tag)
+           if (line.tag== "{http://broadhop.com/unifiedapi/soap/types}service"):
+               print ("envir a service")
+           elif (line.tag =="{http://broadhop.com/unifiedapi/soap/types}balance"):
+               print("enivar a balance")
+           elif (line.tag == "{http://broadhop.com/unifiedapi/soap/types}status"):
+               print (line.text)
+           else:
+               print("etqiueta no conocuda")
